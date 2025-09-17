@@ -1,3 +1,4 @@
+using Elasticsearch_dotnet;
 using Elasticsearch_dotnet.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("SQLite"));
 });
 builder.Services.AddScoped<IAppDbContext, AppDbContext>();
+builder.Services.AddElasticSearch(builder.Configuration);
 
 var app = builder.Build();
 
