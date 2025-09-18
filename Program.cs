@@ -1,4 +1,5 @@
 using Elasticsearch_dotnet;
+using Elasticsearch_dotnet.Elastic;
 using Elasticsearch_dotnet.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 builder.Services.AddElasticSearch(builder.Configuration);
+builder.Services.AddScoped<InitializeIndexService>();
 
 var app = builder.Build();
 
@@ -29,5 +31,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+var initializeIndexServices = scope.ServiceProvider.GetRequiredService<InitializeIndexService>();
+await initializeIndexServices.Run();
 
 app.Run();
