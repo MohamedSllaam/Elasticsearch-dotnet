@@ -17,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 builder.Services.AddElasticSearch(builder.Configuration);
 builder.Services.AddScoped<InitializeIndexService>();
+builder.Services.AddScoped<SearchService>();
 
 var app = builder.Build();
 
