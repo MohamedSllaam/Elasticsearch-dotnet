@@ -13,7 +13,7 @@ public class SearchService(IElasticClient _elasticClient)
                 m => m.Fields(f => f
                   .Field(ff => ff.Title)
                   .Field(ff => ff.AlbumTitle)
-                  .Field(ff => ff.ArtistName)
+                  .Field(ff => ff.ArtistName , boost:3)
                   )
                 .Query(parameters.SearchText)
                 .Fuzziness(Fuzziness.Auto)
